@@ -143,6 +143,34 @@ namespace  strom {
         }
     }
     
+    inline GeneticCode::genetic_code_names_t GeneticCode::getRecognizedGeneticCodeNames() {
+        genetic_code_names_t names;
+        for (auto it = _definitions.begin(); it != _definitions.end(); ++it) {
+            names.push_back(it->first);
+        }
+        return names;
+    }
+    
+    inline bool GeneticCode::isRecognizedGeneticCodeName(const std::string & name) {
+        std::string lcname = name;
+        boost::to_lower(lcname);
+        return (_definitions.find(lcname) != _definitions.end());
+    }
+    
+    inline void GeneticCode::ensureGeneticCodeNameIsValid(const std::string & name) {
+        if (!isRecognizedGeneticCodeName(name)) {
+            auto valid_genetic_code_names = getRecognizedGeneticCodeNames();
+            std::cout << "Recognized genetic code: \n";
+            for (std::string name : valid_genetic_code_names) {
+                std::cout << " " << name << "\n";
+            }
+            std::cout << std::endl;
+            throw XStrom(boost::format("%s is not a recognized genetic code") % name);
+        }
+    }
+    
+    
+    
 }
 
 #endif /* genetic_code_h */

@@ -55,13 +55,13 @@ namespace strom {
     };
     
     inline Tree::Tree() {
-        std::cout << "Constructing a Tree" << std::endl;
+        //std::cout << "Constructing a Tree" << std::endl;
         clear();
         //createTestTree();
     }
     
     inline Tree::~Tree() {
-        std::cout << "Destroying a Tree" << std::endl;
+        //std::cout << "Destroying a Tree" << std::endl;
     }
     
     inline void Tree::clear() {
