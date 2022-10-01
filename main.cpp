@@ -12,6 +12,7 @@
 #include "genetic_code.hpp"
 #include "datatype.hpp"
 #include "partition.hpp"
+#include "data.hpp"
 #include "tree_summary.hpp"
 //#include "strom.hpp"
 //#include "xstrom.hpp"
@@ -23,11 +24,32 @@ const double Node::_smallest_edge_length = 1.0e-12;
 //std::string  Strom::_program_name        = "strom";
 //unsigned     Strom::_major_version       = 1;
 //unsigned     Strom::_minor_version       = 0;
+GeneticCode::genetic_code_definitions_t GeneticCode::_definitions = {
+                             // codon order is alphabetical: i.e. AAA, AAC, AAG, AAT, ACA, ..., TTT
+    {"standard",             "KNKNTTTTRSRSIIMIQHQHPPPPRRRRLLLLEDEDAAAAGGGGVVVV*Y*YSSSS*CWCLFLF"},
+    {"vertmito",             "KNKNTTTT*S*SMIMIQHQHPPPPRRRRLLLLEDEDAAAAGGGGVVVV*Y*YSSSSWCWCLFLF"},
+    {"yeastmito",            "KNKNTTTTRSRSIIMIQHQHPPPPRRRRLLLLEDEDAAAAGGGGVVVV*Y*YSSSSWCWCLFLF"},
+    {"moldmito",             "KNKNTTTTRSRSIIMIQHQHPPPPRRRRLLLLEDEDAAAAGGGGVVVV*Y*YSSSSWCWCLFLF"},
+    {"invertmito",           "KNKNTTTTSSSSMIMIQHQHPPPPRRRRLLLLEDEDAAAAGGGGVVVV*Y*YSSSSWCWCLFLF"},
+    {"ciliate",              "KNKNTTTTRSRSIIMIQHQHPPPPRRRRLLLLEDEDAAAAGGGGVVVVQYQYSSSS*CWCLFLF"},
+    {"echinomito",           "NNKNTTTTSSSSIIMIQHQHPPPPRRRRLLLLEDEDAAAAGGGGVVVV*Y*YSSSSWCWCLFLF"},
+    {"euplotid",             "KNKNTTTTRSRSIIMIQHQHPPPPRRRRLLLLEDEDAAAAGGGGVVVV*Y*YSSSSCCWCLFLF"},
+    {"plantplastid",         "KNKNTTTTRSRSIIMIQHQHPPPPRRRRLLLLEDEDAAAAGGGGVVVV*Y*YSSSS*CWCLFLF"},
+    {"altyeast",             "KNKNTTTTRSRSIIMIQHQHPPPPRRRRLLSLEDEDAAAAGGGGVVVV*Y*YSSSS*CWCLFLF"},
+    {"ascidianmito",         "KNKNTTTTGSGSMIMIQHQHPPPPRRRRLLLLEDEDAAAAGGGGVVVV*Y*YSSSSWCWCLFLF"},
+    {"altflatwormmito",      "NNKNTTTTSSSSIIMIQHQHPPPPRRRRLLLLEDEDAAAAGGGGVVVVYY*YSSSSWCWCLFLF"},
+    {"blepharismamacro",     "KNKNTTTTRSRSIIMIQHQHPPPPRRRRLLLLEDEDAAAAGGGGVVVV*YQYSSSS*CWCLFLF"},
+    {"chlorophyceanmito",    "KNKNTTTTRSRSIIMIQHQHPPPPRRRRLLLLEDEDAAAAGGGGVVVV*YLYSSSS*CWCLFLF"},
+    {"trematodemito",        "NNKNTTTTSSSSMIMIQHQHPPPPRRRRLLLLEDEDAAAAGGGGVVVV*Y*YSSSSWCWCLFLF"},
+    {"scenedesmusmito",      "KNKNTTTTRSRSIIMIQHQHPPPPRRRRLLLLEDEDAAAAGGGGVVVV*YLY*SSS*CWCLFLF"},
+    {"thraustochytriummito", "KNKNTTTTRSRSIIMIQHQHPPPPRRRRLLLLEDEDAAAAGGGGVVVV*Y*YSSSS*CWC*FLF"}
+};
 
 int main(int argc, const char * argv[]) {
 
     std::cout << "Starting ... " << std::endl;
     
+    /*
     TreeSummary sumt;
     try {
         sumt.readTreefile("test.tre", 1);
@@ -37,6 +59,17 @@ int main(int argc, const char * argv[]) {
     }
     
     sumt.showSummary();
+    */
+    
+    Data imputdata;
+    try {
+        imputdata.setPartition("first:1-1234\3");
+        imputdata.getDataFromFile("rbcL.nex");
+    } catch(NxsException x) {
+        std::cerr << "Program aborting due to error encounted reading tree file" << std::endl;
+        std::cerr << x.what() << std::endl;
+    }
+    
     
     std::cout << "\n Finished!" << std::endl;
     
