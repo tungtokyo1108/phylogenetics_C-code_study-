@@ -60,11 +60,37 @@ int main(int argc, const char * argv[]) {
     
     sumt.showSummary();
     */
-    
-    Data imputdata;
+    Partition::SharedPtr _partition;
+    Data::SharedPtr _data;
+    std::vector<std::string> partition_subsets;
+    //partition_subsets.push_back("first:1-10");
+    //partition_subsets.push_back("second:11-40");
+    //partition_subsets.push_back("third:41-60");
+    partition_subsets.push_back("rbcL[codon,plantplastid]:1-20");
+    partition_subsets.push_back("rbcL[protein]:21-40");
+    partition_subsets.push_back("morph[standard]:41-45");
+    _partition.reset(new Partition());
+    for (auto s : partition_subsets) {
+        _partition->parseSubsetDefinition(s);
+    }
     try {
-        imputdata.setPartition("first:1-1234\3");
-        imputdata.getDataFromFile("rbcL.nex");
+        _data = Data::SharedPtr(new Data());
+        _data->setPartition(_partition);
+        //_data->getDataFromFile("rbcL.nex");
+        _data->getDataFromFile("datatest.nex");
+        
+        unsigned nsubsets = _data->getNumSubsets();
+        std::cout << "\nNumber of taxa: " << _data->getNumTaxa() << std::endl;
+        std::cout << "Number of partition subset: " << nsubsets << std::endl;
+        for (unsigned subset = 0; subset < nsubsets; subset++) {
+            DataType dt = _partition->getDataTypeForSubset(subset);
+            std::cout << "Subset " << (subset + 1) << "(" << _data->getSubsetName(subset) << ")" << std::endl;
+            std::cout << "data type: " << dt.getDataTypeAsString() << std::endl;
+            std::cout << "site: " << _data->calcSeqLenInSubset(subset) << std::endl;
+            std::cout << "pattern: " << _data->getNumPatternsInSubset(subset) << std::endl;
+        }
+        
+        
     } catch(NxsException x) {
         std::cerr << "Program aborting due to error encounted reading tree file" << std::endl;
         std::cerr << x.what() << std::endl;

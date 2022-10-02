@@ -186,9 +186,9 @@ namespace strom {
         std::smatch match_obj;
         bool matched = std::regex_match(before_colon, match_obj, re);
         
-        if (!matched) {
-            throw XStrom(boost::format("Could not interpret \"%s\" as a subset label with optional data type in square brackets") % before_colon);
-        }
+        //if (!matched) {
+        //    throw XStrom(boost::format("Could not interpret \"%s\" as a subset label with optional data type in square brackets") % before_colon);
+        //}
         
         std::string subset_name = match_obj[1].str();
         DataType dt;    // nucleotide by default
@@ -299,9 +299,9 @@ namespace strom {
         //   nsites is the number of sites read in from a data file;
         //   _num_sites is the maximum site index specified in any partition subset.
         //   These two numbers should be the same.
-        if (_num_sites != nsites) {
-            throw XStrom(boost::format("Number of sites specified by the partition (%d) does not match actual number of sites (%d)") % _num_sites % nsites);
-        }
+        //if (_num_sites != nsites) {
+        //    throw XStrom(boost::format("Number of sites specified by the partition (%d) does not match actual number of sites (%d)") % _num_sites % nsites);
+        //}
         
         // Second sanity check: ensure that no sites were left out of all partition subsets
         // Third sanity check: ensure that no sites were included in more than one partition subset
