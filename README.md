@@ -14,3 +14,5 @@
 - cp /usr/local/lib/libhmsbeagle.1.dylib . 
 - cp /usr/local/lib/libhmsbeagle.dylib . 
 - Click on the Build Phases tab. Click the + sign in Link Binary With Libraries and (after clicking the Add Other… button) navigate to the directory ~/lib/static and select the libhmsbeagle.1.dylib and libhmsbeagle.dylib 
+
+## Source: [Strom Phylogenetics C++ tutorial](https://stromtutorial.github.io/mac/steps/)
