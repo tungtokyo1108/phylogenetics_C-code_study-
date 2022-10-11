@@ -25,7 +25,7 @@ namespace strom {
     class Node {
         friend class Tree;
         friend class TreeManip;
-        //friend class Likelihood;
+        friend class Likelihood;
         //friend class Updater;
         
         public:

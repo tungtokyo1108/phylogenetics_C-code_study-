@@ -23,7 +23,7 @@ namespace strom {
     class Tree {
         
         friend class TreeManip;
-        //friend class Likelihood;
+        friend class Likelihood;
         //friend class Updater;
         
         public:
